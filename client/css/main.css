@@ -8,11 +8,15 @@ html, body {
     height: 100%;
     display: flex;
     flex-direction: column;
-    margin: 1em 0;
+    padding: 1em 0;
 }
 
 .container-md {
-    margin-top: 1em;
+    margin: 1em 0;
+}
+
+.breadcrumb {
+    margin-bottom: 0 !important;
 }
 
 #map {

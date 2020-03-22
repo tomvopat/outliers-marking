@@ -24,7 +24,8 @@ app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')))
 
 // connect to DB
-mongoose.connect("mongodb://127.0.0.1:27017/outliers", {
+const uri = "mongodb://localhost:27017/outliers";
+mongoose.connect(uri, {
     useFindAndModify: false,
     useNewUrlParser: true,
     useUnifiedTopology: true
@@ -45,7 +46,7 @@ app.get("/positions", function(req, res, next) {
     })
 });
 
-// retrieving all files
+// get all files
 app.get("/files", function(req, res, next) {
     File.find(function(err, result) {
         if(err) {
@@ -57,11 +58,51 @@ app.get("/files", function(req, res, next) {
     });
 });
 
+// get file by name
+app.get("/file", function(req, res, next) {
+    const name = req.query["name"];
+    File.findOne({name: name}, function(err, result) {
+        if(err) {
+            console.log(err);
+            res.json([]);
+        } else {
+            res.json(result);
+        }
+    });
+});
+
+app.get("/files-outliercount", function(req, res, next) {
+    Location.aggregate([
+        {$match: {outlier: true}},
+        {$group: {
+            _id: "$file",
+            count: {$sum: 1}
+        }},
+        {$project: {
+            "_id": false,
+            "name": "$_id",
+            "count": true
+        }}
+    ]).exec(function(err, doc) {
+        if(err) {
+            console.log("err: " + err);
+            res.json([]);
+        } else {
+            res.json(doc);
+        }
+    });
+});
+
 // set given position to be outlier {id: pointId}
 app.post("/set-fake", function(req, res) {
     const id = req.query["id"];
-    console.log(id);
-    Location.findByIdAndUpdate(id, {$set: {outlier: true}}, {new: true}, function(err, doc) {
+    const outlier = req.body["outlier"];
+    if(outlier == undefined) {
+        console.log("missing body")
+        res.status(404);
+        return;
+    }
+    Location.findByIdAndUpdate(id, {$set: {outlier: outlier}}, {new: true}, function(err, doc) {
         if(err) {
             console.log("err: " + err);
             res.json({});
@@ -72,10 +113,15 @@ app.post("/set-fake", function(req, res) {
 });
 
 // set given files as checked {file: fileName}
-app.post("/set-done", function(req, res) {
+app.post("/set-checked", function(req, res) {
     const file = req.query["file"];
-    console.log("mark: " + file);
-    File.findOneAndUpdate({name: file}, {$set: {checked: true}}, {new: true}, function(err, doc) {
+    const checked = req.body["checked"];
+    if(checked == undefined) {
+        console.log("err: done undefined")
+        res.status(404);
+        return;
+    }
+    File.findOneAndUpdate({name: file}, {$set: {checked: checked}}, {new: true}, function(err, doc) {
         if(err) {
             console.log("err: " + err);
             res.json({});
@@ -83,7 +129,7 @@ app.post("/set-done", function(req, res) {
             res.json(doc);
         }
     });
-})
+});
 
 // start app
 

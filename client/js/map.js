@@ -144,10 +144,11 @@ function createCircle(pos) {
     return new google.maps.Circle ({
         path: google.maps.SymbolPath.CIRCLE,
         fillColor: "grey",
-        fillOpacity: .3,
+        fillOpacity: 0.1,
         radius: Math.pow(pos.accuracy / 150, 2),
-        strokeColor: "white",
-        strokeWeight: .7,
+        strokeWeight: 3,
+        strokeColor: '#000000',
+        strokeOpacity: 0.5,
         map: map,
         center: coord
     });

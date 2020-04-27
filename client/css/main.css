@@ -6,9 +6,10 @@ html, body {
 
 .breadcrumb {
     margin-bottom: 0 !important;
+    background-color: inherit !important;
 }
 
-#map {
-    flex: 1;
-    background-color: grey;
+.fill {
+    height: 100%;
+    min-height: 100%;
 }

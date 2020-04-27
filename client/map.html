@@ -3,31 +3,33 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script defer src="js/all.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTLpR7beTHfwZL6d5AmDwet0Mg0hKgxRc&libraries=places"></script>
-
+    <link rel="stylesheet" href="css/bootstrap.min.css">
     <title>Marking Outliers</title>
 </head>
 
 <body>
-    <div class="content">
-        <div class="container-md">
-            <h1>Marking Outliers</h1>
-            <nav class="navbar navbar-light bg-light">
-                <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a href="./index.html">Browser</a></li>
-                    <li id="file-caption" class="breadcrumb-item active" aria-current="page">Unknown</li>
-                </ol>
-                <button
-                    id="checked-button"
-                    type="button"
-                    class="btn btn-outline-success"
-                    disabled>Mark Checked</button>
-            </nav>
-        </div>
-        <div id="map"></div>
-    </div>
-    <script src="js/map.js"></script>
+<div class="container fill d-flex flex-column">
+    <nav class="navbar navbar-light bg-light">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="./..">Marking Outliers</a></li>
+            <li id="file-caption" class="breadcrumb-item active" aria-current="page">Unknown</li>
+        </ol>
+        <button
+            id="checked-button"
+            type="button"
+            class="btn btn-outline-success"
+            disabled>Mark Checked</button>
+    </nav>
+    <div id="map"></div>
+    <footer class="container py-3 text-muted text-center">
+        © 2020 Tomáš Vopat
+    </footer>
+</div>
+
+<script src="libs/jquery-3.4.1.min.js"></script>
+<script src="libs/bootstrap.min.js"></script>
+<script src="libs/all.min.js"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDTLpR7beTHfwZL6d5AmDwet0Mg0hKgxRc&libraries=places"></script>
+<script src="js/map.js"></script>          
 </body>
 </html>

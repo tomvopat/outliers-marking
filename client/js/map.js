@@ -15,7 +15,8 @@ let map = new google.maps.Map(
     document.getElementById('map'),
     {
         center: center_pos,
-        zoom: 8
+        zoom: 8,
+        scaleControl: true
     }
 );
 
@@ -106,7 +107,7 @@ function displayMarkers(file) {
             lat: firstPos.value["latitude"],
             lng: firstPos.value["longitude"]
         });
-        map.setZoom(25);
+        map.setZoom(15);
     }
     request.send();
 }
@@ -134,17 +135,17 @@ function createMarker(pos, infoWindow) {
     return marker;
 }
 
-function createCircle(position) {
+function createCircle(pos) {
     const coord = {
-        lat: position.latitude,
-        lng: position.longitude
+        lat: pos.latitude,
+        lng: pos.longitude
     };
 
     return new google.maps.Circle ({
         path: google.maps.SymbolPath.CIRCLE,
         fillColor: "grey",
-        fillOpacity: .5,
-        radius: Math.pow(position.accuracy / 20, 2),
+        fillOpacity: .3,
+        radius: Math.pow(pos.accuracy / 150, 2),
         strokeColor: "white",
         strokeWeight: .7,
         map: map,

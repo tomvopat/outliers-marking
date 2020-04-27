@@ -1,5 +1,6 @@
 "use strict";
 
+//const baseUrl = "http://tomvopat.com:3000";
 const baseUrl = "http://localhost:3000";
 const pageSize = Number.MAX_SAFE_INTEGER;
 let page = getUrlPage();
@@ -11,6 +12,7 @@ if(page == undefined) {
 let tableData = new Map();
 let table = document.querySelector("#tbody");
 
+// Loading file names
 let request = new XMLHttpRequest();
 request.onload = function() {
     let files = JSON.parse(this.response);
@@ -26,6 +28,7 @@ request.onload = function() {
 request.open("GET", `${baseUrl}/files`, true);
 request.send();
 
+// Loading number of outliers
 request = new XMLHttpRequest();
 request.onload = function() {
     let files = JSON.parse(this.response);
@@ -40,13 +43,13 @@ request.open("GET", `${baseUrl}/files-outliercount`, true);
 request.send();
 
 function updateTable(page = 1, ascending = true) {
-    // TODO: not working
     let values = Array.from(tableData.values());
-    values.sort(function(a, b) {
-        if(ascending) return a["idx"] >= b["idx"];
-        else return b["idx"] >= a["idx"];
-    });
-    values = values.slice((page - 1) * pageSize, page * pageSize);
+    // TODO: not working
+    // values.sort(function(a, b) {
+    //     if(ascending) return a["idx"] >= b["idx"];
+    //     else return b["idx"] >= a["idx"];
+    // });
+    //values = values.slice((page - 1) * pageSize, page * pageSize);
 
     // clearing table
     table.innerHTML = "";
